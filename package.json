@@ -6,6 +6,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "start": "wrangler pages dev ./build/client",
     "deploy": "npm run build && wrangler pages deploy",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
@@ -13,7 +14,7 @@
     "test:watch": "vitest",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "start": "bindings=$(./bindings.sh) && wrangler pages dev ./build/client $bindings",
+    "start:linux": "bindings=$(./bindings.sh) && wrangler pages dev ./build/client $bindings",
     "dockerstart": "bindings=$(./bindings.sh) && wrangler pages dev ./build/client $bindings --ip 0.0.0.0 --port 5173 --no-show-interactive-dev-session",
     "dockerrun": "docker run -it -d --name bolt-ai-live -p 5173:5173 --env-file .env.local bolt-ai",
     "dockerbuild:prod": "docker build -t bolt-ai:production -t bolt-ai:latest --target bolt-ai-production .",
