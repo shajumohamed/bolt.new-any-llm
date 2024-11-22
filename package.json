@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "start": "remix vite:build && wrangler pages dev ./build/client",
+    "fix": "node sync-fixer-bolt.cjs",
     "deploy": "npm run build && wrangler pages deploy",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
