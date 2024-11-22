@@ -6,7 +6,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "start": "wrangler pages dev ./build/client",
+    "start": "remix vite:build && wrangler pages dev ./build/client",
     "deploy": "npm run build && wrangler pages deploy",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
