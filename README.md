@@ -2,11 +2,39 @@
 
 # Bolt.new Fork by Burgil
 
-This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want! Currently, you can run it on Windows 10, Windows 11, MacOS, Linux and use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
+This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want!
+
+I am still trying to solve [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:
+
+## Installation: (Tested on Win10)
+
+```
+git clone https://github.com/burgil/bolt.new-any-llm_windows
+cd bolt.new-any-llm_windows
+```
+* Rename `.env.local.rename` to `.env.local` - No need to fill anything
+```
+npm install
+npm start
+```
+* Open http://127.0.0.1:8788/
+* Get an API key from some where for testing: e.g.
+![image](https://github.com/user-attachments/assets/d5fabc32-c6d3-4622-ab33-362b22fc7c09)
+* Tell the AI `hi` to create an empty project
+* Go to the terminal in the browser and paste the content created from our script (See below for updated instructions)
+
+#### Alternative script to deal with the Sync Files button not working:
+
+* Updated Script: (Cleaned) https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs _(required .cjs to signal commonjs to a module project if running with node)_
+* Updated Usage: `cd bolt.new-any-llm_windows` && `npm run fix` then paste a URL to generate your clone instructions in a text file e.g. `Cloner_Synchr0nic_v3.txt`
+* Example project for the script (our project): https://github.com/Synchr0nic/v3
+* Example script output: https://github.com/burgil/bolt.new-any-llm_windows/blob/main/Cloner_Synchr0nic_v3.txt
 
 # Bolt.new: AI-Powered Full-Stack Web Development in the Browser
 
 Bolt.new is an AI-powered web development agent that allows you to prompt, run, edit, and deploy full-stack applications directly from your browser—no local setup required. If you're here to build your own AI-powered web dev agent using the Bolt open source codebase, [click here to get started!](./CONTRIBUTING.md)
+
+Currently, you can run it on Windows 10, Windows 11, MacOS, Linux and use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
 
 ## What Makes Bolt.new Different
 
