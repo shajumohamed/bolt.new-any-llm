@@ -11,4 +11,9 @@ html,
 body {
   height: 100%;
   width: 100%;
+	scrollbar-color: var(#0a6df8) #36393f;
+}
+
+* {
+	scrollbar-width: thin;
 }
