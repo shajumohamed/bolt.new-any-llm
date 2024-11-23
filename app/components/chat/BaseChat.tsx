@@ -119,8 +119,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const TEXTAREA_MAX_HEIGHT = chatStarted ? 400 : 200;
     const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
     const [modelList, setModelList] = useState(MODEL_LIST);
-    const slashes = location.pathname.split('/');
-    const currentID = slashes[slashes.length - 1];
 
     const handleEmptyProjectClick = useCallback((event: React.MouseEvent) => {
       const newInputValue = 'Hi';
@@ -314,16 +312,20 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                           </>
                         )}
                       </IconButton>
-                      {currentID === '' && <ClientOnly>
-                        {() => (
-                          <IconButton
-                            title="Empty Project"
-                            onClick={handleEmptyProjectClick}
-                          >
-                            <div className="ml-1.5">Create Empty Project</div>
-                          </IconButton> 
-                        )}
-                      </ClientOnly>}
+                      <ClientOnly>
+                        {() => {
+                          const slashes = location.pathname.split('/');
+                          const currentID = slashes[slashes.length - 1];
+                          return currentID === '' && (
+                            <IconButton
+                              title="Empty Project"
+                              onClick={handleEmptyProjectClick}
+                            >
+                              <div className="ml-1.5">Create Empty Project</div>
+                            </IconButton> 
+                          )
+                        }}
+                      </ClientOnly>
                     </div>
                     {input.length > 3 ? (
                       <div className="text-xs text-bolt-elements-textTertiary">
