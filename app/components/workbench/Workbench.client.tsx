@@ -18,6 +18,7 @@ import { EditorPanel } from "./EditorPanel";
 import { Preview } from "./Preview";
 import useViewport from "~/lib/hooks";
 import { generateCommands, parseGitHubUrl } from "~/new/clone";
+import { saveCommandToIndexedDB } from "~/new/save-cmd";
 
 interface WorkspaceProps {
 	chatStarted?: boolean;
@@ -257,14 +258,16 @@ export const Workbench = memo(
 														const commands = generateCommands(files);
 														// console.log("Executing Commands:\n", commands);
 														for (const commandData of commands) {
-														console.log("Executing Command:\n", commandData);
-														// const result = 
-														await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
-														// if (result) {
-														// workbenchStore.boltTerminal.terminal?.write(result.output);
-														// console.log("Result:\n", result);
-														// }
-														await new Promise(resolve => setTimeout(resolve, 300));
+															console.log("Executing Command:\n", commandData);
+															// const result = 
+															await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
+															// if (result) {
+															// workbenchStore.boltTerminal.terminal?.write(result.output);
+															// console.log("Result:\n", result);
+															// }
+															// Save message to IndexedDB after executing each command
+															await saveCommandToIndexedDB(commandData);
+															await new Promise(resolve => setTimeout(resolve, 300));
 														}
 														alert("Clone commands generated! Check the console for details.");
 													} catch (error) {

@@ -1,6 +1,6 @@
 import { openDatabase } from "~/lib/persistence/db";
 
-export async function saveMessageToIndexedDB(commandData: {
+export async function saveCommandToIndexedDB(commandData: {
 	command: string;
 	link: string;
 	path: string;
