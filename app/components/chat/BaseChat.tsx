@@ -119,6 +119,8 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const TEXTAREA_MAX_HEIGHT = chatStarted ? 400 : 200;
     const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
     const [modelList, setModelList] = useState(MODEL_LIST);
+    const slashes = location.pathname.split('/');
+    const currentID = slashes[slashes.length - 1];
 
     const handleEmptyProjectClick = useCallback((event: React.MouseEvent) => {
       const newInputValue = 'Hi';
@@ -312,7 +314,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                           </>
                         )}
                       </IconButton>
-                      <ClientOnly>
+                      {currentID === '' && <ClientOnly>
                         {() => (
                           <IconButton
                             title="Empty Project"
@@ -321,7 +323,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                             <div className="ml-1.5">Create Empty Project</div>
                           </IconButton> 
                         )}
-                      </ClientOnly>
+                      </ClientOnly>}
                     </div>
                     {input.length > 3 ? (
                       <div className="text-xs text-bolt-elements-textTertiary">

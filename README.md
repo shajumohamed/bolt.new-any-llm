@@ -32,7 +32,8 @@ npm start
 * Open http://127.0.0.1:8788/
 * Get an API key from some where for testing: e.g.
 ![image](https://github.com/user-attachments/assets/d5fabc32-c6d3-4622-ab33-362b22fc7c09)
-* Tell the AI `hi` to create an empty project
+* Click `Create Empty project`
+* Note: After refreshing the page you might wanna run these commands manually if that did not work
 
 ## POC: (Proof of concept)
 
@@ -40,11 +41,11 @@ Example 1:
 
 ![image](https://github.com/user-attachments/assets/9543a083-37f8-47cb-a875-2150d9e545ec)
 
-Example 1:
+Example 2:
 
 ![image](https://github.com/user-attachments/assets/9184ba4b-a8dc-402e-8b15-098f696b49be)
 
-Example 1:
+Example 3:
 
 ![image](https://github.com/user-attachments/assets/4d767ca4-4ffe-4040-a7a8-96e1f86800db)
 
