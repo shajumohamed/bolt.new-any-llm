@@ -19,6 +19,8 @@ import { Preview } from "./Preview";
 import useViewport from "~/lib/hooks";
 import { generateCommands, parseGitHubUrl } from "~/new/clone";
 import { saveCommandToIndexedDB } from "~/new/save-cmd";
+import { DEFAULT_MODEL, DEFAULT_PROVIDER, PROVIDER_LIST } from "~/utils/constants";
+import Cookies from 'js-cookie';
 
 interface WorkspaceProps {
 	chatStarted?: boolean;
@@ -260,8 +262,19 @@ export const Workbench = memo(
 														const commands = generateCommands(files);
 														// console.log("Executing Commands:\n", commands);
 														const messages = [];
-														let boltActions = '<boltArtifact id=\"create-file\" title=\"Create Initial Files\">\n  ';
+														const savedModel = Cookies.get('selectedModel');
+														const model = savedModel || DEFAULT_MODEL;
+														const savedProvider = Cookies.get('selectedProvider');
+														const provider = PROVIDER_LIST.find((p) => p.name === savedProvider) || DEFAULT_PROVIDER;
+														let i = 0;
 														for (const commandData of commands) {
+															if (commandData.path.includes('package-lock.json')) {
+																console.log("Skipping file", commandData)
+																continue;
+															}
+															i++;
+															let boltActions = '';
+															boltActions += `<boltArtifact id="create-file${i}" title="Create ${commandData.path}">\n  `;
 															console.log("Executing Command:\n", commandData);
 															await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
 															await new Promise(resolve => setTimeout(resolve, 300));
@@ -285,14 +298,31 @@ export const Workbench = memo(
 															if (!file) throw new Error(`Failed to parse file: ${commandData.path}`)
 															console.log("file:", file)
 															const content = file.content;
-															boltActions += `<boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n\n`;
+															boltActions += `<boltAction type="file" filePath="${commandData.path}">${content}</boltAction>\n\n`;
+															boltActions += `</boltArtifact>\n\nCreated ${commandData.path}`;
+															messages.push({
+																role: "user",
+																content: `[Model: ${model}]\n\n[Provider: ${provider.name}]\n\nrestore history`,
+																createdAt: new Date().toISOString(),
+															})
+															messages.push({
+																role: "assistant",
+																content: boltActions,
+																createdAt: new Date().toISOString(),
+															});
 														}
-														boltActions += `<boltAction type=\"shell\">npm install</boltAction>\n\n`;
-														boltActions += `<boltAction type=\"start\">npm run dev</boltAction>\n\n`;
-														boltActions += '</boltArtifact>\n\nCreated Initial Files - You might wanna manually run the commands above';
+														let boltActionsRun = '<boltArtifact id="runner" title="Running Project">\n  ';
+														boltActionsRun += `<boltAction type="shell">npm install</boltAction>\n\n`;
+														boltActionsRun += `<boltAction type="start">npm run dev</boltAction>\n\n`;
+														boltActionsRun += '</boltArtifact>\n\nRunning...';
+														messages.push({
+															role: "user",
+															content: `[Model: ${model}]\n\n[Provider: ${provider.name}]\n\nrestore history`,
+															createdAt: new Date().toISOString(),
+														})
 														messages.push({
 															role: "assistant",
-															content: boltActions,
+															content: boltActionsRun,
 															createdAt: new Date().toISOString(),
 														});
 														await saveCommandToIndexedDB(currentID, messages);
