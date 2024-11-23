@@ -288,7 +288,7 @@ export const Workbench = memo(
 															boltActions += `<boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n\n`;
 														}
 														boltActions += `<boltAction type=\"shell\">npm install</boltAction>\n\n`;
-														boltActions += `<boltAction type=\"shell\">npm start</boltAction>\n\n`;
+														boltActions += `<boltAction type=\"shell\">npm run dev</boltAction>\n\n`;
 														boltActions += '</boltArtifact>\n\nCreated Initial Files';
 														messages.push({
 															role: "assistant",
