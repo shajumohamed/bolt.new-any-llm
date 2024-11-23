@@ -5,11 +5,13 @@
 This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want!
 
 * Added a Clone button that works!
+* Fixed cloning not saving after reload!
 * New Backup/Restore Functions That Works! - Restore/Backup even when on the homepage
 * Auto save/fork new chats
+* Changed default model to Mistral Large and the default context size to 128000
 * Auto open code area on reload
 * Added create new project button
-* More visual improvements and things I probably forgot I did
+* Visual improvements
 ![alt text](preview1.png)
 
 https://github.com/user-attachments/assets/f84c37c5-86a2-4fbb-be58-2fa082c53a4c
@@ -31,7 +33,6 @@ npm start
 * Get an API key from some where for testing: e.g.
 ![image](https://github.com/user-attachments/assets/d5fabc32-c6d3-4622-ab33-362b22fc7c09)
 * Tell the AI `hi` to create an empty project
-* Go to the terminal in the browser and paste the content created from our script (See below for updated instructions)
 
 #### Alternative script to deal with the Sync Files button not working:
 
