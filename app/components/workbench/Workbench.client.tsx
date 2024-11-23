@@ -260,21 +260,35 @@ export const Workbench = memo(
 														const commands = generateCommands(files);
 														// console.log("Executing Commands:\n", commands);
 														const messages = [];
+														let i = 0;
 														for (const commandData of commands) {
+															i++;
 															console.log("Executing Command:\n", commandData);
 															await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
 															await new Promise(resolve => setTimeout(resolve, 300));
-															const files = workbenchStore.files.get();
+															let files = workbenchStore.files.get();
 															console.log("file name:", `/home/project/${commandData.path}`)
 															console.log("files:", files)
-															const file = files[`/home/project/${commandData.path}`] as {
+															let file = files[`/home/project/${commandData.path}`] as {
 																content: string;
 															};
+															let timeout = 20;
+															while (timeout > 0) {
+																console.log("Retrying...")
+																timeout -= 1;
+																await new Promise(resolve => setTimeout(resolve, 300));
+																files = workbenchStore.files.get();
+																file = files[`/home/project/${commandData.path}`] as {
+																	content: string;
+																};
+																if (file) break;
+															}
+															if (!file) throw new Error(`Failed to parse file: ${commandData.path}`)
 															console.log("file:", file)
 															const content = file.content;
 															messages.push({
 																role: "assistant",
-																content: `<boltArtifact>\n  <boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>`,
+																content: `<boltArtifact>\n  <boltAction id=\"create-file${i}\" title=\"Create ${commandData.path} File\" type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>\n\nCreated ${commandData.path}`,
 																createdAt: new Date().toISOString(),
 															});
 														}
