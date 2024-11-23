@@ -102,7 +102,7 @@ export const Workbench = memo(
 			workbenchStore.saveCurrentDocument().catch(() => {
 				toast.error("Failed to update file content");
 			});
-			console.log("file save:", workbenchStore.currentDocument);
+			// console.log("file save:", workbenchStore.currentDocument);
 		}, []);
 
 		const onFileReset = useCallback(() => {
@@ -263,19 +263,17 @@ export const Workbench = memo(
                               }));
                       
                             const commands = generateCommands(files);
-                            console.log("Executing Commands:\n", commands);
+                            // console.log("Executing Commands:\n", commands);
                             for (const command of commands) {
-                              console.log("Executing Command:\n", command);
+                              // console.log("Executing Command:\n", command);
                               const result = await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, command);
                               if (result) {
                                 // workbenchStore.boltTerminal.terminal?.write(result.output);
-                                console.log("Result:\n", result);
+                                // console.log("Result:\n", result);
                               }
                               await new Promise(resolve => setTimeout(resolve, 300));
                             }
-                            setTimeout(() => {
-                              alert("Clone commands generated! Check the console for details.");
-                            }, 1000);
+                            alert("Clone commands generated! Check the console for details.");
                           } catch (error) {
                             console.error("Error:", error instanceof Error ? error.message : error);
                             alert("Failed to clone repository.");
