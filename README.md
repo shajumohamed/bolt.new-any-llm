@@ -4,15 +4,17 @@
 
 This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want!
 
-* New Backup/Restore Functions That Works!
-* Restore/Backup even when on the homepage
+* Added a Clone button that works!
+* New Backup/Restore Functions That Works! - Restore/Backup even when on the homepage
 * Auto save/fork new chats
 * Auto open code area on reload
 * Added create new project button
-* Added a Clone button that works!
+* More visual improvements and things I probably forgot I did
 ![alt text](preview1.png)
 
-I am still trying to solve [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:
+https://github.com/user-attachments/assets/f84c37c5-86a2-4fbb-be58-2fa082c53a4c
+
+Just solved [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:
 
 ## Installation: (Tested on Win10)
 
