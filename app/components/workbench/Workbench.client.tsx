@@ -260,9 +260,8 @@ export const Workbench = memo(
 														const commands = generateCommands(files);
 														// console.log("Executing Commands:\n", commands);
 														const messages = [];
-														let i = 0;
+														let boltActions = '<boltArtifact id=\"create-file\" title=\"Create Initial Files\">\n  ';
 														for (const commandData of commands) {
-															i++;
 															console.log("Executing Command:\n", commandData);
 															await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
 															await new Promise(resolve => setTimeout(resolve, 300));
@@ -272,7 +271,7 @@ export const Workbench = memo(
 															let file = files[`/home/project/${commandData.path}`] as {
 																content: string;
 															};
-															let timeout = 20;
+															let timeout = 3;
 															while (timeout > 0) {
 																console.log("Retrying...")
 																timeout -= 1;
@@ -286,17 +285,16 @@ export const Workbench = memo(
 															if (!file) throw new Error(`Failed to parse file: ${commandData.path}`)
 															console.log("file:", file)
 															const content = file.content;
-															messages.push({
-																role: "user",
-																content: '',
-																createdAt: new Date().toISOString(),
-															});
-															messages.push({
-																role: "assistant",
-																content: `<boltArtifact id=\"create-file${i}\" title=\"Create ${commandData.path} File\">\n  <boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>\n\nCreated ${commandData.path}`,
-																createdAt: new Date().toISOString(),
-															});
+															boltActions += `<boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n\n`;
 														}
+														boltActions += `<boltAction type=\"shell\">npm install</boltAction>\n\n`;
+														boltActions += `<boltAction type=\"shell\">npm start</boltAction>\n\n`;
+														boltActions += '</boltArtifact>\n\nCreated Initial Files';
+														messages.push({
+															role: "assistant",
+															content: boltActions,
+															createdAt: new Date().toISOString(),
+														});
 														await saveCommandToIndexedDB(currentID, messages);
 														alert("Clone commands generated! Check the console for details.");
 														if (confirm("You need to reload the page to see the changes, Do you want to reload now?")) {
