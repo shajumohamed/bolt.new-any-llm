@@ -28,7 +28,7 @@ export function Header() {
       <span className="flex-1 px-4 truncate text-center text-bolt-elements-textPrimary">
         <ClientOnly>{() => <ChatDescription />}</ClientOnly>
       </span>
-      {chat.started && (
+      {chat.started ? (
         <ClientOnly>
           {() => (
             <div className="mr-1">
@@ -60,6 +60,35 @@ export function Header() {
             </div>
           )}
         </ClientOnly>
+      ) : (
+        <ClientOnly>
+          {() => (
+            <div className="mr-1">
+              <div className="flex">
+                <Button
+                  onClick={() => {
+                    backupDatabase();
+                  }}
+                >
+                  <div className="i-ph:download" style={{
+                    marginRight: '5px'
+                  }} />
+                  Backup
+                </Button>
+                <Button
+                  onClick={() => {
+                    restoreDatabase();
+                  }}
+                >
+                  <div className="i-ph:database" style={{
+                    marginRight: '5px'
+                  }} />
+                  Restore
+                </Button>
+              </div>
+            </div>
+          )}
+      </ClientOnly>
       )}
     </header>
   );

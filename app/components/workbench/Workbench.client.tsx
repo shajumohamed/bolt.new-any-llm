@@ -17,6 +17,7 @@ import { renderLogger } from "~/utils/logger";
 import { EditorPanel } from "./EditorPanel";
 import { Preview } from "./Preview";
 import useViewport from "~/lib/hooks";
+import { generateCommands, parseGitHubUrl } from "~/new/clone";
 
 interface WorkspaceProps {
 	chatStarted?: boolean;
@@ -234,13 +235,52 @@ export const Workbench = memo(
 											</PanelHeaderButton>
 											<PanelHeaderButton
 												className="mr-1 text-sm"
-												onClick={() => {
-													const new_repo_url = prompt(
-														"Enter repostiroy URL:",
-														"https://github.com/",
-													);
-                          alert(`WIP: ${new_repo_url}`)
-												}}
+												onClick={async () => {
+                          const newRepoUrl = prompt("Enter repository URL:", "https://github.com/");
+                          if (!newRepoUrl) {
+                            return;
+                          }
+                      
+                          try {
+                            const { owner, repo } = parseGitHubUrl(newRepoUrl);
+                            const branch = "main"; // Default branch, can be enhanced
+                            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+                      
+                            const response = await fetch(apiUrl);
+                            if (!response.ok) {
+                              throw new Error(`Failed to fetch repo data: ${response.statusText}`);
+                            }
+                      
+                            const treeData: {
+                              tree: { path: string; type: string }[];
+                            } = await response.json();
+                      
+                            const files = treeData.tree
+                              .filter((item) => item.type === "blob")
+                              .map((file) => ({
+                                path: file.path,
+                                link: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${file.path}`,
+                              }));
+                      
+                            const commands = generateCommands(files);
+                            console.log("Executing Commands:\n", commands);
+                            for (const command of commands) {
+                              console.log("Executing Command:\n", command);
+                              const result = await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, command);
+                              if (result) {
+                                // workbenchStore.boltTerminal.terminal?.write(result.output);
+                                console.log("Result:\n", result);
+                              }
+                              await new Promise(resolve => setTimeout(resolve, 300));
+                            }
+                            setTimeout(() => {
+                              alert("Clone commands generated! Check the console for details.");
+                            }, 1000);
+                          } catch (error) {
+                            console.error("Error:", error instanceof Error ? error.message : error);
+                            alert("Failed to clone repository.");
+                          }
+                        }}
 											>
 												<div className="i-ph:github-logo" />
 												Clone

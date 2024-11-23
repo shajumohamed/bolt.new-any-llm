@@ -68,17 +68,32 @@ export async function restoreDatabase() {
 			const store = transaction.objectStore("chats");
 			const clearRequest = store.clear();
 			clearRequest.onsuccess = () => {
-				for (const item of parsedData) {
+				try {
+				  for (const item of parsedData) {
 					store.put(item);
+				  }
+				} catch (error) {
+				  console.error("Failed during data insertion:", error);
+				  alert("Failed to restore! Check console for details.");
+				  return;
 				}
+			  
 				transaction.oncomplete = () => {
 					alert("Restore completed successfully.");
 					if (confirm("You need to reload the page to see the changes, Do you want to reload now?")) {
 						location.reload();
 					}
 				};
+				transaction.onerror = (event) => {
+					const err = (event.target as {
+						error?: string;
+					});
+					console.error("Transaction failed:", err.error);
+					alert(`Failed to restore: ${err.error}`)
+				}
 			};
-			clearRequest.onerror = () => {
+			clearRequest.onerror = (event) => {
+			  	console.error("Failed to clear existing data:", event.target);
 				alert("Failed to clear existing data.");
 			};
 		} catch (error) {
