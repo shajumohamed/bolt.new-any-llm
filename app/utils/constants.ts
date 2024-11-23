@@ -10,6 +10,29 @@ export const DEFAULT_MODEL = 'claude-3-5-sonnet-latest';
 
 const PROVIDER_LIST: ProviderInfo[] = [
   {
+    name: 'Mistral',
+    staticModels: [
+      { name: 'mistral-large-latest', label: 'Mistral Large Latest', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'open-mixtral-8x22b', label: 'Mistral 8x22B', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'open-mixtral-8x7b', label: 'Mistral 8x7B', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'open-mistral-7b', label: 'Mistral 7B', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'open-codestral-mamba', label: 'Codestral Mamba', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'open-mistral-nemo', label: 'Mistral Nemo', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'ministral-8b-latest', label: 'Mistral 8B', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'mistral-small-latest', label: 'Mistral Small', provider: 'Mistral', maxTokenAllowed: 8000 },
+      { name: 'codestral-latest', label: 'Codestral', provider: 'Mistral', maxTokenAllowed: 8000 },
+    ],
+    getApiKeyLink: 'https://console.mistral.ai/api-keys/',
+  },
+  {
+    name: 'Ollama',
+    staticModels: [],
+    getDynamicModels: getOllamaModels,
+    getApiKeyLink: 'https://ollama.com/download',
+    labelForGetApiKey: 'Download Ollama',
+    icon: 'i-ph:cloud-arrow-down',
+  },
+  {
     name: 'Anthropic',
     staticModels: [
       {
@@ -35,14 +58,6 @@ const PROVIDER_LIST: ProviderInfo[] = [
       { name: 'claude-3-haiku-20240307', label: 'Claude 3 Haiku', provider: 'Anthropic', maxTokenAllowed: 8000 },
     ],
     getApiKeyLink: 'https://console.anthropic.com/settings/keys',
-  },
-  {
-    name: 'Ollama',
-    staticModels: [],
-    getDynamicModels: getOllamaModels,
-    getApiKeyLink: 'https://ollama.com/download',
-    labelForGetApiKey: 'Download Ollama',
-    icon: 'i-ph:cloud-arrow-down',
   },
   {
     name: 'OpenAILike',
@@ -235,21 +250,6 @@ const PROVIDER_LIST: ProviderInfo[] = [
       { name: 'deepseek-chat', label: 'Deepseek-Chat', provider: 'Deepseek', maxTokenAllowed: 8000 },
     ],
     getApiKeyLink: 'https://platform.deepseek.com/apiKeys',
-  },
-  {
-    name: 'Mistral',
-    staticModels: [
-      { name: 'open-mistral-7b', label: 'Mistral 7B', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'open-mixtral-8x7b', label: 'Mistral 8x7B', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'open-mixtral-8x22b', label: 'Mistral 8x22B', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'open-codestral-mamba', label: 'Codestral Mamba', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'open-mistral-nemo', label: 'Mistral Nemo', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'ministral-8b-latest', label: 'Mistral 8B', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'mistral-small-latest', label: 'Mistral Small', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'codestral-latest', label: 'Codestral', provider: 'Mistral', maxTokenAllowed: 8000 },
-      { name: 'mistral-large-latest', label: 'Mistral Large Latest', provider: 'Mistral', maxTokenAllowed: 8000 },
-    ],
-    getApiKeyLink: 'https://console.mistral.ai/api-keys/',
   },
   {
     name: 'LMStudio',

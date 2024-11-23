@@ -288,12 +288,15 @@ export const Workbench = memo(
 															const content = file.content;
 															messages.push({
 																role: "assistant",
-																content: `<boltArtifact>\n  <boltAction id=\"create-file${i}\" title=\"Create ${commandData.path} File\" type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>\n\nCreated ${commandData.path}`,
+																content: `<boltArtifact id=\"create-file${i}\" title=\"Create ${commandData.path} File\" type=\"file\">\n  <boltAction filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>\n\nCreated ${commandData.path}`,
 																createdAt: new Date().toISOString(),
 															});
 														}
 														await saveCommandToIndexedDB(currentID, messages);
 														alert("Clone commands generated! Check the console for details.");
+														if (confirm("You need to reload the page to see the changes, Do you want to reload now?")) {
+															location.reload();
+														}
 													} catch (error) {
 														console.error("Error:", error instanceof Error ? error.message : error);
 														alert("Failed to clone repository.");
