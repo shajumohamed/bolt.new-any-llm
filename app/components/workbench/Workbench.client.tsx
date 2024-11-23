@@ -318,7 +318,7 @@ export const Workbench = memo(
 														let boltActionsRun = '<boltArtifact id="runner" title="Running Project">\n  ';
 														boltActionsRun += `<boltAction type="shell">npm install</boltAction>\n\n`;
 														boltActionsRun += `<boltAction type="start">npm run dev</boltAction>\n\n`;
-														boltActionsRun += '</boltArtifact>\n\nRunning...';
+														boltActionsRun += '</boltArtifact>\n\nRunning... - Note: You might wanna run these commands manually if that did not work';
 														messages.push({
 															content: `[Model: ${model}]\n\n[Provider: ${provider.name}]\n\nrestore history`,
 															createdAt: new Date(),
