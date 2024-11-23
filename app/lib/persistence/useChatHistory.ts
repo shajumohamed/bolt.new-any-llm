@@ -8,8 +8,8 @@ import { getMessages, getNextId, getUrlId, openDatabase, setMessages, duplicateC
 
 export interface ChatHistoryItem {
   id: string;
-  urlId?: string;
-  description?: string;
+  urlId: string;
+  description: string;
   messages: Message[];
   timestamp: string;
 }
@@ -28,14 +28,14 @@ export function useChatHistory() {
 
   const [initialMessages, setInitialMessages] = useState<Message[]>([]);
   const [ready, setReady] = useState<boolean>(false);
-  const [urlId, setUrlId] = useState<string | undefined>();
+  const [urlId, setUrlId] = useState<string>();
 
   useEffect(() => {
     if (!db) {
       setReady(true);
 
       if (persistenceEnabled) {
-        toast.error(`Chat persistence is unavailable`);
+        toast.error("Chat persistence is unavailable");
       }
 
       return;
@@ -55,7 +55,7 @@ export function useChatHistory() {
             description.set(storedMessages.description);
             chatId.set(storedMessages.id);
           } else {
-            navigate(`/`, { replace: true });
+            navigate("/", { replace: true });
           }
 
           setReady(true);
@@ -97,7 +97,14 @@ export function useChatHistory() {
         }
       }
 
-      await setMessages(db, chatId.get() as string, messages, urlId, description.get());
+      if (!urlId) {
+        const newId = await getNextId(db);
+        const new_urlId = await getUrlId(db, newId);
+        setUrlId(new_urlId);
+        await setMessages(db, chatId.get() as string, messages, new_urlId, description.get() || `Chat #${new_urlId}`);
+      } else {
+        await setMessages(db, chatId.get() as string, messages, urlId, description.get() || `Chat #${urlId}`);
+      }
     },
     duplicateCurrentChat: async (listItemId: string) => {
       if (!db || (!mixedId && !listItemId)) {

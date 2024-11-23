@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useRef, useState } from 'react';
-import { type ChatHistoryItem } from '~/lib/persistence';
+import type { ChatHistoryItem } from '~/lib/persistence';
 
 interface HistoryItemProps {
   item: ChatHistoryItem;
