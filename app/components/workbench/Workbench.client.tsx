@@ -234,51 +234,45 @@ export const Workbench = memo(
 												Push
 											</PanelHeaderButton>
 											<PanelHeaderButton
-												className="mr-1 text-sm"
 												onClick={async () => {
-                          const newRepoUrl = prompt("Enter repository URL:", "https://github.com/");
-                          if (!newRepoUrl) {
-                            return;
-                          }
-                      
-                          try {
-                            const { owner, repo } = parseGitHubUrl(newRepoUrl);
-                            const branch = "main"; // Default branch, can be enhanced
-                            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
-                      
-                            const response = await fetch(apiUrl);
-                            if (!response.ok) {
-                              throw new Error(`Failed to fetch repo data: ${response.statusText}`);
-                            }
-                      
-                            const treeData: {
-                              tree: { path: string; type: string }[];
-                            } = await response.json();
-                      
-                            const files = treeData.tree
-                              .filter((item) => item.type === "blob")
-                              .map((file) => ({
-                                path: file.path,
-                                link: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${file.path}`,
-                              }));
-                      
-                            const commands = generateCommands(files);
-                            // console.log("Executing Commands:\n", commands);
-                            for (const command of commands) {
-                              // console.log("Executing Command:\n", command);
-                              const result = await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, command);
-                              if (result) {
-                                // workbenchStore.boltTerminal.terminal?.write(result.output);
-                                // console.log("Result:\n", result);
-                              }
-                              await new Promise(resolve => setTimeout(resolve, 300));
-                            }
-                            alert("Clone commands generated! Check the console for details.");
-                          } catch (error) {
-                            console.error("Error:", error instanceof Error ? error.message : error);
-                            alert("Failed to clone repository.");
-                          }
-                        }}
+													const newRepoUrl = prompt("Enter repository URL:", "https://github.com/");
+													if (!newRepoUrl) return;
+													try {
+														const { owner, repo } = parseGitHubUrl(newRepoUrl);
+														const branch = "main"; // Default branch, can be enhanced
+														const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+												
+														const response = await fetch(apiUrl);
+														if (!response.ok) throw new Error(`Failed to fetch repo data: ${response.statusText}`);
+												
+														const treeData: {
+															tree: { path: string; type: string }[];
+														} = await response.json();
+												
+														const files = treeData.tree.filter((item) => item.type === "blob").map((file) => ({
+															path: file.path,
+															link: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${file.path}`,
+														}));
+												
+														const commands = generateCommands(files);
+														// console.log("Executing Commands:\n", commands);
+														for (const commandData of commands) {
+														console.log("Executing Command:\n", commandData);
+														// const result = 
+														await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
+														// if (result) {
+														// workbenchStore.boltTerminal.terminal?.write(result.output);
+														// console.log("Result:\n", result);
+														// }
+														await new Promise(resolve => setTimeout(resolve, 300));
+														}
+														alert("Clone commands generated! Check the console for details.");
+													} catch (error) {
+														console.error("Error:", error instanceof Error ? error.message : error);
+														alert("Failed to clone repository.");
+													}
+												}}
+												className="mr-1 text-sm"
 											>
 												<div className="i-ph:github-logo" />
 												Clone
