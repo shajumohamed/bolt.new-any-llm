@@ -34,6 +34,23 @@ npm start
 ![image](https://github.com/user-attachments/assets/d5fabc32-c6d3-4622-ab33-362b22fc7c09)
 * Tell the AI `hi` to create an empty project
 
+## POC: (Proof of concept)
+
+Example 1:
+
+![image](https://github.com/user-attachments/assets/9543a083-37f8-47cb-a875-2150d9e545ec)
+
+Example 1:
+
+![image](https://github.com/user-attachments/assets/9184ba4b-a8dc-402e-8b15-098f696b49be)
+
+Example 1:
+
+![image](https://github.com/user-attachments/assets/4d767ca4-4ffe-4040-a7a8-96e1f86800db)
+
+![image](https://github.com/user-attachments/assets/d337edc9-925b-485b-a254-9e85af5d6feb)
+
+
 #### Alternative script to deal with the Sync Files button not working:
 
 * Updated Script: (Cleaned) https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs _(required .cjs to signal commonjs to a module project if running with node)_
