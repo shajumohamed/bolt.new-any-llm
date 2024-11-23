@@ -179,7 +179,7 @@ export const Workbench = memo(
 												}}
 											>
 												<div className="i-ph:code" />
-												Download Code
+												Download
 											</PanelHeaderButton>
 											<PanelHeaderButton
 												className="mr-1 text-sm"

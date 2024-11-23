@@ -40,7 +40,7 @@ export async function newShellProcess(webcontainer: WebContainer, terminal: ITer
   );
 
   terminal.onData((data) => {
-    console.log('terminal onData', { data, isInteractive });
+    // console.log('terminal onData', { data, isInteractive });
 
     if (isInteractive) {
       input.write(data);
@@ -94,6 +94,7 @@ export class BoltShell {
   }
 
   async executeCommand(sessionId: string, command: string): Promise<ExecutionResult> {
+    // console.log('executeCommand', command, {sessionId});
     if (!this.process || !this.terminal) {
       return undefined;
     }
@@ -162,7 +163,7 @@ export class BoltShell {
     );
 
     terminal.onData((data) => {
-      // console.log('terminal onData', { data, isInteractive });
+      // console.log('terminal bolt onData', { data, isInteractive });
 
       if (isInteractive) {
         input.write(data);
@@ -176,6 +177,7 @@ export class BoltShell {
 
   async getCurrentExecutionResult(): Promise<ExecutionResult> {
     const { output, exitCode } = await this.waitTillOscCode('exit');
+    // console.log('getCurrentExecutionResult', output, exitCode);
     return { output, exitCode };
   }
 
