@@ -3,7 +3,7 @@
  * Preventing TS checks with files presented in the video for a better presentation.
  */
 import type { Message } from 'ai';
-import React, { type RefCallback, useEffect } from 'react';
+import React, { type RefCallback, useCallback, useEffect } from 'react';
 import { ClientOnly } from 'remix-utils/client-only';
 import { Menu } from '~/components/sidebar/Menu.client';
 import { IconButton } from '~/components/ui/IconButton';
@@ -120,6 +120,21 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
     const [modelList, setModelList] = useState(MODEL_LIST);
 
+    const handleEmptyProjectClick = useCallback((event: React.MouseEvent) => {
+      const newInputValue = 'Hi';
+      const changeEvent = {
+        target: { value: newInputValue } as HTMLTextAreaElement,
+        currentTarget: { value: newInputValue } as HTMLTextAreaElement,
+        nativeEvent: new Event('change'),
+        isDefaultPrevented: () => false,
+        isPropagationStopped: () => false,
+        persist: () => {},
+      } as React.ChangeEvent<HTMLTextAreaElement>;
+      handleInputChange?.(changeEvent);
+      if (isStreaming) return;
+      sendMessage?.(event, newInputValue);
+    }, [sendMessage, handleInputChange, isStreaming]);
+  
     useEffect(() => {
       // Load API keys from cookies on component mount
       try {
@@ -287,16 +302,26 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       >
                         {enhancingPrompt ? (
                           <>
-                            <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-loader-progress text-xl animate-spin"></div>
+                            <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-loader-progress text-xl animate-spin" />
                             <div className="ml-1.5">Enhancing prompt...</div>
                           </>
                         ) : (
                           <>
-                            <div className="i-bolt:stars text-xl"></div>
+                            <div className="i-bolt:stars text-xl" />
                             {promptEnhanced && <div className="ml-1.5">Prompt enhanced</div>}
                           </>
                         )}
                       </IconButton>
+                      <ClientOnly>
+                        {() => (
+                          <IconButton
+                            title="Empty Project"
+                            onClick={handleEmptyProjectClick}
+                          >
+                            <div className="ml-1.5">Create Empty Project</div>
+                          </IconButton> 
+                        )}
+                      </ClientOnly>
                     </div>
                     {input.length > 3 ? (
                       <div className="text-xs text-bolt-elements-textTertiary">

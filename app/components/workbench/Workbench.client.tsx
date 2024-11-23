@@ -287,6 +287,11 @@ export const Workbench = memo(
 															console.log("file:", file)
 															const content = file.content;
 															messages.push({
+																role: "user",
+																content: '',
+																createdAt: new Date().toISOString(),
+															});
+															messages.push({
 																role: "assistant",
 																content: `<boltArtifact id=\"create-file${i}\" title=\"Create ${commandData.path} File\">\n  <boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>\n\nCreated ${commandData.path}`,
 																createdAt: new Date().toISOString(),

@@ -8,6 +8,7 @@ This fork of Bolt.new (burgil) allows you to choose the LLM that you use for eac
 * Restore/Backup even when on the homepage
 * Auto save/fork new chats
 * Auto open code area on reload
+* Added create new project button
 * Added a Clone button that works!
 ![alt text](preview1.png)
 
