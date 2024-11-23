@@ -98,6 +98,7 @@ export const Workbench = memo(({ chatStarted, isStreaming }: WorkspaceProps) => 
     workbenchStore.saveCurrentDocument().catch(() => {
       toast.error('Failed to update file content');
     });
+    console.log("file save:", workbenchStore.currentDocument)
   }, []);
 
   const onFileReset = useCallback(() => {
