@@ -65,26 +65,26 @@ export function Header() {
           {() => (
             <div className="mr-1">
               <div className="flex">
-                <Button
-                  onClick={() => {
-                    backupDatabase();
-                  }}
-                >
-                  <div className="i-ph:download" style={{
-                    marginRight: '5px'
-                  }} />
-                  Backup
-                </Button>
-                <Button
-                  onClick={() => {
-                    restoreDatabase();
-                  }}
-                >
-                  <div className="i-ph:database" style={{
-                    marginRight: '5px'
-                  }} />
-                  Restore
-                </Button>
+                  <Button
+                    onClick={() => {
+                      backupDatabase();
+                    }}
+                  >
+                    <div className="i-ph:download" style={{
+                      marginRight: '5px'
+                    }} />
+                    Backup
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      restoreDatabase();
+                    }}
+                  >
+                    <div className="i-ph:database" style={{
+                      marginRight: '5px'
+                    }} />
+                    Restore
+                  </Button>
               </div>
             </div>
           )}

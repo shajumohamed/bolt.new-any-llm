@@ -255,20 +255,30 @@ export const Workbench = memo(
 															link: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${file.path}`,
 														}));
 												
+														const slashes = location.pathname.split('/');
+														const currentID = slashes[slashes.length - 1];
 														const commands = generateCommands(files);
 														// console.log("Executing Commands:\n", commands);
+														const messages = [];
 														for (const commandData of commands) {
 															console.log("Executing Command:\n", commandData);
-															// const result = 
 															await workbenchStore.boltTerminal.executeCommand(`${new Date()}`, commandData.command);
-															// if (result) {
-															// workbenchStore.boltTerminal.terminal?.write(result.output);
-															// console.log("Result:\n", result);
-															// }
-															// Save message to IndexedDB after executing each command
-															await saveCommandToIndexedDB(commandData);
 															await new Promise(resolve => setTimeout(resolve, 300));
+															const files = workbenchStore.files.get();
+															console.log("file name:", `/home/project/${commandData.path}`)
+															console.log("files:", files)
+															const file = files[`/home/project/${commandData.path}`] as {
+																content: string;
+															};
+															console.log("file:", file)
+															const content = file.content;
+															messages.push({
+																role: "assistant",
+																content: `<boltArtifact>\n  <boltAction type=\"file\" filePath=\"${commandData.path}\">${content}</boltAction>\n</boltArtifact>`,
+																createdAt: new Date().toISOString(),
+															});
 														}
+														await saveCommandToIndexedDB(currentID, messages);
 														alert("Clone commands generated! Check the console for details.");
 													} catch (error) {
 														console.error("Error:", error instanceof Error ? error.message : error);
