@@ -1,9 +1,11 @@
 import { openDatabase } from "~/lib/persistence/db";
 
 export async function saveCommandToIndexedDB(currentID: string, messages: {
-	role: string;
 	content: string;
-	createdAt: string;
+	createdAt: Date;
+	experimental_attachments?: undefined;
+	id: string;
+	role: string;
 }[]) {
 	try {
 		const db = await openDatabase();

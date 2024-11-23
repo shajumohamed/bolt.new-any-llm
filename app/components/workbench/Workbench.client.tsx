@@ -21,6 +21,7 @@ import { generateCommands, parseGitHubUrl } from "~/new/clone";
 import { saveCommandToIndexedDB } from "~/new/save-cmd";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER, PROVIDER_LIST } from "~/utils/constants";
 import Cookies from 'js-cookie';
+import { generateRandomString } from "~/new/random-string";
 
 interface WorkspaceProps {
 	chatStarted?: boolean;
@@ -301,14 +302,17 @@ export const Workbench = memo(
 															boltActions += `<boltAction type="file" filePath="${commandData.path}">${content}</boltAction>\n\n`;
 															boltActions += `</boltArtifact>\n\nCreated ${commandData.path}`;
 															messages.push({
-																role: "user",
 																content: `[Model: ${model}]\n\n[Provider: ${provider.name}]\n\nrestore history`,
-																createdAt: new Date().toISOString(),
+																createdAt: new Date(),
+																experimental_attachments: undefined,
+																id: generateRandomString(7),
+																role: "user",
 															})
 															messages.push({
-																role: "assistant",
 																content: boltActions,
-																createdAt: new Date().toISOString(),
+																createdAt: new Date(),
+																id: generateRandomString(7),
+																role: "assistant",
 															});
 														}
 														let boltActionsRun = '<boltArtifact id="runner" title="Running Project">\n  ';
@@ -316,14 +320,17 @@ export const Workbench = memo(
 														boltActionsRun += `<boltAction type="start">npm run dev</boltAction>\n\n`;
 														boltActionsRun += '</boltArtifact>\n\nRunning...';
 														messages.push({
-															role: "user",
 															content: `[Model: ${model}]\n\n[Provider: ${provider.name}]\n\nrestore history`,
-															createdAt: new Date().toISOString(),
+															createdAt: new Date(),
+															experimental_attachments: undefined,
+															id: generateRandomString(7),
+															role: "user",
 														})
 														messages.push({
-															role: "assistant",
 															content: boltActionsRun,
-															createdAt: new Date().toISOString(),
+															createdAt: new Date(),
+															id: generateRandomString(7),
+															role: "assistant",
 														});
 														await saveCommandToIndexedDB(currentID, messages);
 														alert("Clone commands generated! Check the console for details.");
