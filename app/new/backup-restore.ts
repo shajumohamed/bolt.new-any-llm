@@ -73,6 +73,9 @@ export async function restoreDatabase() {
 				}
 				transaction.oncomplete = () => {
 					alert("Restore completed successfully.");
+					if (confirm("You need to reload the page to see the changes, Do you want to reload now?")) {
+						location.reload();
+					}
 				};
 			};
 			clearRequest.onerror = () => {

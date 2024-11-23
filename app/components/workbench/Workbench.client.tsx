@@ -3,9 +3,9 @@ import { motion, type HTMLMotionProps, type Variants } from "framer-motion";
 import { computed } from "nanostores";
 import { memo, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import {
-	type OnChangeCallback as OnEditorChange,
-	type OnScrollCallback as OnEditorScroll,
+import type {
+	OnChangeCallback as OnEditorChange,
+	OnScrollCallback as OnEditorScroll,
 } from "~/components/editor/codemirror/CodeMirrorEditor";
 import { IconButton } from "~/components/ui/IconButton";
 import { PanelHeaderButton } from "~/components/ui/PanelHeaderButton";
@@ -17,7 +17,6 @@ import { renderLogger } from "~/utils/logger";
 import { EditorPanel } from "./EditorPanel";
 import { Preview } from "./Preview";
 import useViewport from "~/lib/hooks";
-import { backupDatabase, restoreDatabase } from "~/new/backup-restore";
 
 interface WorkspaceProps {
 	chatStarted?: boolean;
@@ -154,24 +153,6 @@ export const Workbench = memo(
 									<div className="ml-auto" />
 									{selectedView === "code" && (
 										<div className="flex overflow-y-auto">
-											<PanelHeaderButton
-												className="mr-1 text-sm"
-												onClick={() => {
-													backupDatabase();
-												}}
-											>
-												<div className="i-ph:download" />
-												Backup
-											</PanelHeaderButton>
-											<PanelHeaderButton
-												className="mr-1 text-sm"
-												onClick={() => {
-													restoreDatabase();
-												}}
-											>
-												<div className="i-ph:database" />
-												Restore
-											</PanelHeaderButton>
 											<PanelHeaderButton
 												className="mr-1 text-sm"
 												onClick={() => {
