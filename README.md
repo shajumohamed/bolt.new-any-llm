@@ -1,4 +1,4 @@
-# Note: Don't use my fork on your YouTube videos - Thanks!
+# Note: Don't show my fork on your YouTube videos - Thanks!
 
 ## Bolt.new Fork by Burgil
 
