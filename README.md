@@ -1,6 +1,6 @@
-[![Bolt.new: AI-Powered Full-Stack Web Development in the Browser](./public/social_preview_index.jpg)](https://bolt.new)
+# Note: Don't use my fork on your YouTube videos - Thanks!
 
-# Bolt.new Fork by Burgil
+## Bolt.new Fork by Burgil
 
 This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want!
 
