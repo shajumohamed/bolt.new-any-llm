@@ -52,13 +52,6 @@ Example 3:
 
 ![image](https://github.com/user-attachments/assets/4d767ca4-4ffe-4040-a7a8-96e1f86800db)
 
-#### Alternative script to deal with the Sync Files button not working:
-
-* Updated Script: (Cleaned) https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs _(required .cjs to signal commonjs to a module project if running with node)_
-* Updated Usage: `cd bolt.new-any-llm_windows` && `npm run fix` then paste a URL to generate your clone instructions in a text file e.g. `Cloner_Synchr0nic_v3.txt`
-* Example project for the script (our project): https://github.com/Synchr0nic/v3
-* Example script output: https://github.com/burgil/bolt.new-any-llm_windows/blob/main/Cloner_Synchr0nic_v3.txt
-
 # Bolt.new: AI-Powered Full-Stack Web Development in the Browser
 
 Bolt.new is an AI-powered web development agent that allows you to prompt, run, edit, and deploy full-stack applications directly from your browser—no local setup required. If you're here to build your own AI-powered web dev agent using the Bolt open source codebase, [click here to get started!](./CONTRIBUTING.md)
