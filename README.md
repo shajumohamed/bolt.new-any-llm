@@ -16,7 +16,10 @@ This fork of Bolt.new (burgil) allows you to choose the LLM that you use for eac
 
 https://github.com/user-attachments/assets/f84c37c5-86a2-4fbb-be58-2fa082c53a4c
 
-Just solved [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:
+Just solved [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, ~~the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:~~
+
+> [!note]
+> I integrated the external script into the app itself as can be seen in the video
 
 ## Installation: (Tested on Win10)
 
