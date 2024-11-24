@@ -52,9 +52,6 @@ Example 3:
 
 ![image](https://github.com/user-attachments/assets/4d767ca4-4ffe-4040-a7a8-96e1f86800db)
 
-![image](https://github.com/user-attachments/assets/d337edc9-925b-485b-a254-9e85af5d6feb)
-
-
 #### Alternative script to deal with the Sync Files button not working:
 
 * Updated Script: (Cleaned) https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs _(required .cjs to signal commonjs to a module project if running with node)_
