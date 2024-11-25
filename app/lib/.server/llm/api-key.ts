@@ -65,3 +65,20 @@ export function getBaseURL(cloudflareEnv: Env, provider: string) {
       return '';
   }
 }
+
+export function getAzureEnv(cloudflareEnv?: Env) {
+  // Cloudflare Pages environment
+  if (cloudflareEnv) {
+    return {
+      resourceName: env.AZURE_RESOURCE_NAME,
+      apiKey: env.AZURE_API_KEY,
+      deploymentName: env.AZURE_DEPLOYMENT_NAME,
+    };
+  }
+  // Local development environment
+  return {
+    resourceName: env.AZURE_RESOURCE_NAME || '',
+    apiKey: env.AZURE_API_KEY || '',
+    deploymentName: env.AZURE_DEPLOYMENT_NAME || '',
+  };
+}

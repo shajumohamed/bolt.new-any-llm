@@ -6,6 +6,8 @@ import { getModel } from '~/lib/.server/llm/model';
 import { MAX_TOKENS } from './constants';
 import { getSystemPrompt } from './prompts';
 import { MODEL_LIST, DEFAULT_MODEL, DEFAULT_PROVIDER, MODEL_REGEX, PROVIDER_REGEX } from '~/utils/constants';
+import { getAzureEnv } from '~/lib/.server/llm/api-key';
+import { getAzureModel } from '~/lib/.server/llm/model';
 
 interface ToolResult<Name extends string, Args, Result> {
   toolCallId: string;
@@ -40,35 +42,53 @@ function extractPropertiesFromMessage(message: Message): { model: string; provid
   return { model, provider, content: cleanedContent };
 }
 
-export function streamText(messages: Messages, env: Env, options?: StreamingOptions, apiKeys?: Record<string, string>) {
-  let currentModel = DEFAULT_MODEL;
-  let currentProvider = DEFAULT_PROVIDER;
+// export function streamText(messages: Messages, env: Env, options?: StreamingOptions, apiKeys?: Record<string, string>) {
+//   let currentModel = DEFAULT_MODEL;
+//   let currentProvider = DEFAULT_PROVIDER;
 
-  const processedMessages = messages.map((message) => {
-    if (message.role === 'user') {
-      const { model, provider, content } = extractPropertiesFromMessage(message);
+//   const processedMessages = messages.map((message) => {
+//     if (message.role === 'user') {
+//       const { model, provider, content } = extractPropertiesFromMessage(message);
 
-      if (MODEL_LIST.find((m) => m.name === model)) {
-        currentModel = model;
-      }
+//       if (MODEL_LIST.find((m) => m.name === model)) {
+//         currentModel = model;
+//       }
 
-      currentProvider = provider;
+//       currentProvider = provider;
 
-      return { ...message, content };
-    }
+//       return { ...message, content };
+//     }
 
-    return message;
-  });
+//     return message;
+//   });
 
-  const modelDetails = MODEL_LIST.find((m) => m.name === currentModel);
+//   const modelDetails = MODEL_LIST.find((m) => m.name === currentModel);
 
-  const dynamicMaxTokens = modelDetails && modelDetails.maxTokenAllowed ? modelDetails.maxTokenAllowed : MAX_TOKENS;
+//   const dynamicMaxTokens = modelDetails && modelDetails.maxTokenAllowed ? modelDetails.maxTokenAllowed : MAX_TOKENS;
 
-  return _streamText({
-    model: getModel(currentProvider, currentModel, env, apiKeys),
+//   return _streamText({
+//     model: getModel(currentProvider, currentModel, env, apiKeys),
+//     system: getSystemPrompt(),
+//     maxTokens: dynamicMaxTokens,
+//     messages: convertToCoreMessages(processedMessages),
+//     ...options,
+//   });
+// }
+
+export function streamText(messages: Messages, env: Env, options?: StreamingOptions) {
+  const { resourceName, apiKey, deploymentName } = getAzureEnv(env);
+  if (!resourceName || !apiKey || !deploymentName) {
+    throw new Error('Azure OpenAI credentials are not properly configured');
+  }
+
+  const stream = _streamText({
+    model: getAzureModel(resourceName, apiKey, deploymentName),
     system: getSystemPrompt(),
-    maxTokens: dynamicMaxTokens,
-    messages: convertToCoreMessages(processedMessages),
+    maxTokens: MAX_TOKENS,
+    headers: {},
+    messages: convertToCoreMessages(messages),
     ...options,
   });
+
+  return stream;
 }

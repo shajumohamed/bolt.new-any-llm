@@ -11,6 +11,7 @@ import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { createMistral } from '@ai-sdk/mistral';
 import { createCohere } from '@ai-sdk/cohere';
 import type { LanguageModelV1 } from 'ai';
+import { createAzure } from '@ai-sdk/azure';
 
 export const DEFAULT_NUM_CTX = process.env.DEFAULT_NUM_CTX ? parseInt(process.env.DEFAULT_NUM_CTX, 10) : 32768;
 
@@ -125,6 +126,14 @@ export function getXAIModel(apiKey: OptionalApiKey, model: string) {
   });
 
   return openai(model);
+}
+
+export function getAzureModel(resourceName: string, apiKey: string, deploymentName: string) {
+  const azure = createAzure({
+    resourceName: resourceName,
+    apiKey: apiKey,
+  });
+  return azure(deploymentName);
 }
 
 export function getModel(provider: string, model: string, env: Env, apiKeys?: Record<string, string>) {
