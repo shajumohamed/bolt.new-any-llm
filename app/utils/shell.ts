@@ -52,7 +52,7 @@ export async function newShellProcess(webcontainer: WebContainer, terminal: ITer
   return process;
 }
 
-export type ExecutionResult = { output: string; exitCode: number } | undefined;
+export type ExecutionResult = { output: string; exitCode2: number } | undefined;
 
 export class BoltShell {
   #initialized: (() => void) | undefined;
@@ -175,16 +175,16 @@ export class BoltShell {
   }
 
   async getCurrentExecutionResult(): Promise<ExecutionResult> {
-    const { output, exitCode } = await this.waitTillOscCode('exit');
-    return { output, exitCode };
+    const { output, exitCode2 } = await this.waitTillOscCode('exit');
+    return { output, exitCode2 };
   }
 
   async waitTillOscCode(waitCode: string) {
     let fullOutput = '';
-    let exitCode: number = 0;
+    let exitCode2: number = 0;
 
     if (!this.#outputStream) {
-      return { output: fullOutput, exitCode };
+      return { output: fullOutput, exitCode2 };
     }
 
     const tappedStream = this.#outputStream;
@@ -203,7 +203,7 @@ export class BoltShell {
       const [, osc, , , code] = text.match(/\x1b\]654;([^\x07=]+)=?((-?\d+):(\d+))?\x07/) || [];
 
       if (osc === 'exit') {
-        exitCode = parseInt(code, 10);
+        exitCode2 = parseInt(code, 10);
       }
 
       if (osc === waitCode) {
@@ -211,7 +211,7 @@ export class BoltShell {
       }
     }
 
-    return { output: fullOutput, exitCode };
+    return { output: fullOutput, exitCode2 };
   }
 }
 

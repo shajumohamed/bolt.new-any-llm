@@ -1,57 +1,62 @@
-[![Bolt.new: AI-Powered Full-Stack Web Development in the Browser](./public/social_preview_index.jpg)](https://bolt.new)
+# Note: Don't show my fork on your YouTube videos - Thanks!
 
-# Bolt.new Fork by Cole Medin - oTToDev
+## Bolt.new Fork by Burgil
 
-This fork of Bolt.new (oTToDev) allows you to choose the LLM that you use for each prompt! Currently, you can use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
+This fork of Bolt.new (burgil) allows you to choose the LLM that you use for each prompt and run it on any operating system you want!
 
-Join the community for oTToDev!
+* Added a Clone button that works!
+* Fixed cloning not saving after reload!
+* New Backup/Restore Functions That Works! - Restore/Backup even when on the homepage
+* Auto save/fork new chats
+* Changed default model to Mistral Large and the default context size to 128000
+* Auto open code area on reload
+* Added create new project button
+* Visual improvements
+![alt text](preview1.png)
 
-https://thinktank.ottomator.ai
+https://github.com/user-attachments/assets/f84c37c5-86a2-4fbb-be58-2fa082c53a4c
 
-# Requested Additions to this Fork - Feel Free to Contribute!!
+Just solved [this](https://github.com/coleam00/bolt.new-any-llm/issues/382), forked the project, ~~the updated changes and the [clean script](https://github.com/burgil/bolt.new-any-llm_windows/blob/main/sync-fixer-bolt.cjs) can be found here:~~
 
-- ✅ OpenRouter Integration (@coleam00)
-- ✅ Gemini Integration (@jonathands)
-- ✅ Autogenerate Ollama models from what is downloaded (@yunatamos)
-- ✅ Filter models by provider (@jasonm23)
-- ✅ Download project as ZIP (@fabwaseem)
-- ✅ Improvements to the main Bolt.new prompt in `app\lib\.server\llm\prompts.ts` (@kofi-bhr)
-- ✅ DeepSeek API Integration (@zenith110)
-- ✅ Mistral API Integration (@ArulGandhi)
-- ✅ "Open AI Like" API Integration (@ZerxZ)
-- ✅ Ability to sync files (one way sync) to local folder (@muzafferkadir)
-- ✅ Containerize the application with Docker for easy installation (@aaronbolton)
-- ✅ Publish projects directly to GitHub (@goncaloalves)
-- ✅ Ability to enter API keys in the UI (@ali00209)
-- ✅ xAI Grok Beta Integration (@milutinke)
-- ✅ LM Studio Integration (@karrot0)
-- ✅ HuggingFace Integration (@ahsan3219)
-- ✅ Bolt terminal to see the output of LLM run commands (@thecodacus)
-- ✅ Streaming of code output (@thecodacus)
-- ✅ Ability to revert code to earlier version (@wonderwhy-er)
-- ⬜ **HIGH PRIORITY** - Prevent Bolt from rewriting files as often (file locking and diffs)
-- ⬜ **HIGH PRIORITY** - Better prompting for smaller LLMs (code window sometimes doesn't start)
-- ⬜ **HIGH PRIORITY** - Load local projects into the app
-- ⬜ **HIGH PRIORITY** - Attach images to prompts
-- ⬜ **HIGH PRIORITY** - Run agents in the backend as opposed to a single model call
-- ⬜ Mobile friendly
-- ⬜ Together Integration
-- ⬜ Azure Open AI API Integration
-- ⬜ Perplexity Integration
-- ⬜ Vertex AI Integration
-- ✅ Cohere Integration (@hasanraiyan)
-- ✅ Dynamic model max token length (@hasanraiyan)
-- ⬜ Deploy directly to Vercel/Netlify/other similar platforms
-- ⬜ Prompt caching
-- ⬜ Better prompt enhancing
-- ⬜ Have LLM plan the project in a MD file for better results/transparency
-- ⬜ VSCode Integration with git-like confirmations
-- ⬜ Upload documents for knowledge - UI design templates, a code base to reference coding style, etc.
-- ⬜ Voice prompting
+> [!note]
+> I integrated the external script into the app itself as can be seen in the video
+
+## Installation: (Tested on Win10)
+
+```
+git clone https://github.com/burgil/bolt.new-any-llm_windows
+cd bolt.new-any-llm_windows
+```
+* Rename `.env.local.rename` to `.env.local` - No need to fill anything
+```
+npm install
+npm start
+```
+* Open http://127.0.0.1:8788/
+* Get an API key from some where for testing: e.g.
+![image](https://github.com/user-attachments/assets/d5fabc32-c6d3-4622-ab33-362b22fc7c09)
+* Click `Create Empty project`
+* Note: After refreshing the page you might wanna run these commands manually if that did not work
+
+## POC: (Proof of concept)
+
+Example 1:
+
+![image](https://github.com/user-attachments/assets/9543a083-37f8-47cb-a875-2150d9e545ec)
+
+Example 2:
+
+![image](https://github.com/user-attachments/assets/9184ba4b-a8dc-402e-8b15-098f696b49be)
+
+Example 3:
+
+![image](https://github.com/user-attachments/assets/4d767ca4-4ffe-4040-a7a8-96e1f86800db)
 
 # Bolt.new: AI-Powered Full-Stack Web Development in the Browser
 
 Bolt.new is an AI-powered web development agent that allows you to prompt, run, edit, and deploy full-stack applications directly from your browser—no local setup required. If you're here to build your own AI-powered web dev agent using the Bolt open source codebase, [click here to get started!](./CONTRIBUTING.md)
+
+Currently, you can run it on Windows 10, Windows 11, MacOS, Linux and use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
 
 ## What Makes Bolt.new Different
 

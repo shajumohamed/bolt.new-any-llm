@@ -2,8 +2,9 @@ import { useStore } from '@nanostores/react';
 import { ClientOnly } from 'remix-utils/client-only';
 import { chatStore } from '~/lib/stores/chat';
 import { classNames } from '~/utils/classNames';
-import { HeaderActionButtons } from './HeaderActionButtons.client';
+import { Button, HeaderActionButtons } from './HeaderActionButtons.client';
 import { ChatDescription } from '~/lib/persistence/ChatDescription.client';
+import { backupDatabase, restoreDatabase } from '~/new/backup-restore';
 
 export function Header() {
   const chat = useStore(chatStore);
@@ -27,14 +28,67 @@ export function Header() {
       <span className="flex-1 px-4 truncate text-center text-bolt-elements-textPrimary">
         <ClientOnly>{() => <ChatDescription />}</ClientOnly>
       </span>
-      {chat.started && (
+      {chat.started ? (
         <ClientOnly>
           {() => (
             <div className="mr-1">
-              <HeaderActionButtons />
+              <div className="flex">
+                <div className="flex mr-1">
+                  <Button
+                    onClick={() => {
+                      backupDatabase();
+                    }}
+                  >
+                    <div className="i-ph:download" style={{
+                      marginRight: '5px'
+                    }} />
+                    Backup
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      restoreDatabase();
+                    }}
+                  >
+                    <div className="i-ph:database" style={{
+                      marginRight: '5px'
+                    }} />
+                    Restore
+                  </Button>
+                </div>
+                <HeaderActionButtons />
+              </div>
             </div>
           )}
         </ClientOnly>
+      ) : (
+        <ClientOnly>
+          {() => (
+            <div className="mr-1">
+              <div className="flex">
+                  <Button
+                    onClick={() => {
+                      backupDatabase();
+                    }}
+                  >
+                    <div className="i-ph:download" style={{
+                      marginRight: '5px'
+                    }} />
+                    Backup
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      restoreDatabase();
+                    }}
+                  >
+                    <div className="i-ph:database" style={{
+                      marginRight: '5px'
+                    }} />
+                    Restore
+                  </Button>
+              </div>
+            </div>
+          )}
+      </ClientOnly>
       )}
     </header>
   );

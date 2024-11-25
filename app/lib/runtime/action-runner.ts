@@ -160,9 +160,9 @@ export class ActionRunner {
     }
 
     const resp = await shell.executeCommand(this.runnerId.get(), action.content);
-    logger.debug(`${action.type} Shell Response: [exit code:${resp?.exitCode}]`);
+    logger.debug(`${action.type} Shell Response: [exit code:${resp?.exitCode2}]`);
 
-    if (resp?.exitCode != 0) {
+    if (resp?.exitCode2 != 0) {
       throw new Error('Failed To Execute Shell Command');
     }
   }
@@ -184,9 +184,9 @@ export class ActionRunner {
     }
 
     const resp = await shell.executeCommand(this.runnerId.get(), action.content);
-    logger.debug(`${action.type} Shell Response: [exit code:${resp?.exitCode}]`);
+    logger.debug(`${action.type} Shell Response: [exit code:${resp?.exitCode2}]`);
 
-    if (resp?.exitCode != 0) {
+    if (resp?.exitCode2 != 0) {
       throw new Error('Failed To Start Application');
     }
 

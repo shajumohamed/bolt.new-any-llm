@@ -45,8 +45,8 @@ export async function setMessages(
   db: IDBDatabase,
   id: string,
   messages: Message[],
-  urlId?: string,
-  description?: string,
+  urlId: string,
+  description: string,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('chats', 'readwrite');
