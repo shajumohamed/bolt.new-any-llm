@@ -137,7 +137,12 @@ export function getAzureModel(resourceName: string, apiKey: string, deploymentNa
 }
 
 export function getModel(provider: string, model: string, env: Env, apiKeys?: Record<string, string>) {
-  const apiKey = getAPIKey(env, provider, apiKeys);
+  /*
+   * let apiKey; // Declare first
+   * let baseURL;
+   */
+
+  const apiKey = getAPIKey(env, provider, apiKeys); // Then assign
   const baseURL = getBaseURL(env, provider);
 
   switch (provider) {
@@ -154,6 +159,8 @@ export function getModel(provider: string, model: string, env: Env, apiKeys?: Re
     case 'Google':
       return getGoogleModel(apiKey, model);
     case 'OpenAILike':
+      return getOpenAILikeModel(baseURL, apiKey, model);
+    case 'Together':
       return getOpenAILikeModel(baseURL, apiKey, model);
     case 'Deepseek':
       return getDeepseekModel(apiKey, model);
